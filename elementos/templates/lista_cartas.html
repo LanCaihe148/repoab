@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">📜 Cartas de Efra</h2>
+
+<a href="{% url 'elementos:inicio' %}" class="btn btn-sm btn-outline-secondary mb-3">
+    ← Volver
+</a>
+
+<div class="list-group">
+    {% for carta in cartas %}
+        <a href="{% url 'elementos:detalle_carta' carta.id %}"
+           class="list-group-item list-group-item-action">
+            <strong>{{ carta.titulo }}</strong><br>
+            <small class="text-muted">{{ carta.fecha }}</small>
+        </a>
+    {% empty %}
+        <p>No hay cartas.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

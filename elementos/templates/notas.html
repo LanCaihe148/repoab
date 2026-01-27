@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4"></h2>
+
+<div class="list-group">
+
+    {% for carta in cartas %}
+        <a href="#carta{{ carta.id }}"
+           class="list-group-item list-group-item-action"
+           onclick="mostrarCarta('{{ carta.id }}',
+                                  '{{ carta.titulo|escapejs }}',
+                                  '{{ carta.cuerpo|escapejs }}',
+                                  '{{ carta.fecha }}')">
+
+            <strong>{{ carta.titulo }}</strong><br>
+            <small class="text-muted">{{ carta.fecha }}</small>
+        </a>
+    {% empty %}
+        <p>No hay cartas.</p>
+    {% endfor %}
+
+</div>
+
+<hr class="my-5">
+
+<div id="detalle-carta" style="display:none;">
+    <h3 id="detalle-titulo"></h3>
+    <p class="text-muted" id="detalle-fecha"></p>
+    <p id="detalle-cuerpo" class="mt-4"></p>
+</div>
+
+{% endblock %}
