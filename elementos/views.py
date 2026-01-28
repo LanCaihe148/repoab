@@ -5,10 +5,6 @@ from .models import Carta, Nota
 
 
 def inicio(request):
-    # eliminar notas viejas
-    limite = timezone.now() - timedelta(hours=24)
-    Nota.objects.filter(creada__lt=limite).delete()
-
     total_cartas = Carta.objects.count()
     notas = Nota.objects.all().order_by('-creada')
 
