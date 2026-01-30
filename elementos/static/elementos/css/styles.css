@@ -43,3 +43,37 @@ body::before {
         font-size: 1.3rem;
     }
 }
+
+.nota {
+    width: 200px;
+    min-height: 150px;
+    padding: 15px;
+    background: #fff9a6;
+    font-family: "Comic Sans MS", "Segoe UI", sans-serif;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+    transform: rotate(-1deg);
+    position: relative;
+    border-radius: 4px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nota:nth-child(2n) {
+    transform: rotate(1.5deg);
+}
+
+.nota:nth-child(3n) {
+    transform: rotate(-2deg);
+}
+
+.nota:hover {
+    transform: scale(1.05);
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.35);
+}
+
+.nota small {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: #555;
+    font-size: 0.75rem;
+}
