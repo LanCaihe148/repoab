@@ -11,7 +11,7 @@
 <div class="list-group">
     {% for carta in cartas %}
         <a href="{% url 'elementos:detalle_carta' carta.id %}"
-           class="list-group-item list-group-item-action">
+           class="list-group-item list-group-item-action carta">
             <strong>{{ carta.titulo }}</strong><br>
             <small class="text-muted">{{ carta.fecha }}</small>
         </a>

@@ -141,6 +141,24 @@ body::before {
 /* =========================
    CARTA REAL – DETALLE
 ========================= */
+.carta {
+    background: #f5f1a4;
+    border-radius: 12px;
+    padding: 15px;
+    min-height: 120px;
+
+    /* Animación */
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    transition: all 0.4s ease;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.carta.activa {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
 .carta-real {
     background: #fffaf0;
     max-width: 700px;
@@ -176,6 +194,27 @@ body::before {
 @keyframes aparecerCarta {
     from {
         transform: scale(0.7) translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.carta-real {
+    background: #fffdf8;
+    padding: 30px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: aparecer 0.5s ease-out;
+}
+
+@keyframes aparecer {
+    from {
+        transform: scale(0.9) translateY(20px);
         opacity: 0;
     }
     to {

@@ -13,3 +13,13 @@ function mostrarCarta(id, titulo, cuerpo, fecha) {
 function mostrarNota(id, cuerpo){
     document.getElementById('detalle-cuerpo'),textContent = cuerpo;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cartas = document.querySelectorAll(".carta");
+
+    cartas.forEach((carta, index) => {
+        setTimeout(() => {
+            carta.classList.add("activa");
+        }, index * 120); // efecto cascada
+    });
+});
