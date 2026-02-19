@@ -25,7 +25,7 @@ def notificar_nueva_carta(sender, instance, created, **kwargs):
         )
     except Exception as e:
         print("⚠️ Error enviando correo carta:", e)
-        os.system("pip list")
+        os.system("python manage.py shell from sendgrid_django import SendgridBackend")
 
 
 @receiver(post_save, sender=Nota)
