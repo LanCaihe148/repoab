@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import Carta, Nota
 import socket
-
+import os
 # ⏱️ timeout global para SMTP (CRÍTICO)
 socket.setdefaulttimeout(5)
 
@@ -25,6 +25,7 @@ def notificar_nueva_carta(sender, instance, created, **kwargs):
         )
     except Exception as e:
         print("⚠️ Error enviando correo carta:", e)
+        os.system("pip list")
 
 
 @receiver(post_save, sender=Nota)
