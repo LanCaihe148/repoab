@@ -8,6 +8,7 @@ import socket
 # ⏱️ timeout global para SMTP (CRÍTICO)
 socket.setdefaulttimeout(5)
 
+DESTINATARIO = "sandovalpitsakise@gmail.com"  # ← Correo destino
 
 @receiver(post_save, sender=Carta)
 def notificar_nueva_carta(sender, instance, created, **kwargs):
@@ -19,8 +20,8 @@ def notificar_nueva_carta(sender, instance, created, **kwargs):
             subject='💌 Nueva carta para Abi',
             message=f'Tienes una nueva carta:\n\n{instance.titulo}',
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.DEFAULT_FROM_EMAIL],
-            fail_silently=True,
+            recipient_list=[DESTINATARIO],  # ← Cambiado
+            fail_silently=False,            # Para ver errores durante pruebas
         )
     except Exception as e:
         print("⚠️ Error enviando correo carta:", e)
@@ -36,8 +37,8 @@ def notificar_nueva_nota(sender, instance, created, **kwargs):
             subject='📝 Nueva nota',
             message=instance.cuerpo[:200],
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.DEFAULT_FROM_EMAIL],
-            fail_silently=True,
+            recipient_list=[DESTINATARIO],  # ← Cambiado
+            fail_silently=False,            # Para ver errores durante pruebas
         )
     except Exception as e:
         print("⚠️ Error enviando correo nota:", e)
