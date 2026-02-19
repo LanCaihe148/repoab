@@ -12,7 +12,7 @@ def notificar_nueva_carta(sender, instance, created, **kwargs):
             message=f'Se publicó una nueva carta:\n\n{instance.titulo}',
             from_email=None,
             recipient_list=['sandovalpitsakise@gmail.com'],
-            fail_silently=False,
+            fail_silently=True,
         )
 
 
