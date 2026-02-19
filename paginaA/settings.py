@@ -35,16 +35,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = ['*']
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
-# Configuración SMTP SendGrid
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "apikey"  # siempre "apikey" con SendGrid
-EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")  # leído desde environment
-
-# Correo desde el que se envían los mails
+EMAIL_BACKEND = "sendgrid_django.SendgridBackend"
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")  # desde variables de entorno
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 
