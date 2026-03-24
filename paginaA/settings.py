@@ -99,25 +99,11 @@ WSGI_APPLICATION = 'paginaA.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'abi_db',
-        'USER': 'root',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-
-
-"""
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL')
     )
-} """
+} 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
