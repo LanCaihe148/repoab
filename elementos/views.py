@@ -28,7 +28,7 @@ def detalle_carta(request, id):
     })
 
 
-PASSWORD = "16112026"
+PASSWORD = "16112025"
 
 def subir_foto(request):
     error = None
