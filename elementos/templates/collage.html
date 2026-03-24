@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nuestros momentos ❤️</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 20px;
+        }
+
+        .collage {
+            column-count: 4;
+            column-gap: 10px;
+            padding: 10px;
+
+            max-width: 1200px;   /* 🔥 limita el ancho */
+            margin: 0 auto;      /* 🔥 centra el bloque */
+        }
+
+        .foto {
+            break-inside: avoid;
+            margin-bottom: 10px;
+        }
+
+        .foto img {
+            width: 100%;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .foto img:hover {
+            transform: scale(1.05);
+        }
+
+        .desc {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #ccc;
+        }
+
+        .contenedor-subir {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .btn-subir {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 15px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-subir:hover {
+            background: #3e8e41;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<h1>❤️ Nuestros momentos ❤️</h1>
+
+
+<div class="contenedor-subir">
+    <a href="{% url 'elementos:subir_foto' %}">
+        <button class="btn-subir">Subir foto 📸</button>
+    </a>
+</div>
+<div class="collage">
+    {% for foto in fotos %}
+        <div class="foto">
+            <img src="{{ foto.imagen.url }}">
+            <div class="desc">{{ foto.descripcion }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

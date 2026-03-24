@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Carta, Nota
+from .models import Carta, Nota, Foto
+
+admin.site.register(Foto)
 
 @admin.register(Carta)
 class CartasAdmin(admin.ModelAdmin):

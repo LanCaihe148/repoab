@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from datetime import timedelta
-from .models import Carta, Nota
-
+from .models import Carta, Nota, Foto
+import random
 
 def inicio(request):
     total_cartas = Carta.objects.count()
@@ -26,3 +26,28 @@ def detalle_carta(request, id):
     return render(request, 'detalle_carta.html', {
         'carta': carta
     })
+
+
+PASSWORD = "16112026"
+
+def subir_foto(request):
+    error = None
+
+    if request.method == "POST":
+        if request.POST.get("password") == PASSWORD:
+            imagen = request.FILES.get("imagen")
+            descripcion = request.POST.get("descripcion")
+
+            if imagen:
+                Foto.objects.create(imagen=imagen, descripcion=descripcion)
+                return redirect("elementos:collage")
+        else:
+            error = "Contraseña incorrecta"
+
+    return render(request, "subir_foto.html", {"error": error})
+
+def collage(request):
+    fotos = list(Foto.objects.all())
+    random.shuffle(fotos)
+
+    return render(request, "collage.html", {"fotos": fotos})

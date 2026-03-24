@@ -6,6 +6,7 @@ body {
     font-size: 16px;
 }
 
+
 body::before {
     content: "";
     position: fixed;
@@ -222,4 +223,26 @@ body::before {
         transform: scale(1) translateY(0);
         opacity: 1;
     }
+}
+.contenedor-boton {
+    display: flex;
+    justify-content: center;  /* 🔥 centra horizontal */
+    align-items: center;      /* 🔥 centra vertical (opcional) */
+    margin-top: 30px;
+}
+
+.btn-momentos {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-momentos:hover {
+    background: #ff1e4d;
+    transform: scale(1.05);
 }
