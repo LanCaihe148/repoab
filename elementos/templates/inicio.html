@@ -1,13 +1,19 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
-<link rel="stylesheet" href="/elementos/static/css/style.css">
+<link rel="stylesheet" href="{% static 'elementos/css/styles.css' %}">
 <div class="text-center mb-4">
     <h2>📬 Cartas</h2>
     <h4 class="text-muted">{{ total_cartas }} cartas guardadas</h4>
 
     <a href="{% url 'elementos:lista_cartas' %}" class="btn btn-secondary mt-3">
         Ver cartas
+    </a>
+</div>
+
+<div class="contenedor-boton">
+    <a href="{% url 'elementos:collage' %}">
+        <button class="btn-momentos">Nuestros momentos ❤️</button>
     </a>
 </div>
 
