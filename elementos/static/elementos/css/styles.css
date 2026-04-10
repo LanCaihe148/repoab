@@ -49,13 +49,25 @@ body::before {
     width: 200px;
     min-height: 150px;
     padding: 15px;
-    background: #fff9a6;
+    /*background: #fff9a6;*/
     font-family: "Comic Sans MS", "Segoe UI", sans-serif;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
     transform: rotate(-1deg);
     position: relative;
     border-radius: 4px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Nota de Abi (rosita) */
+.nota-ella {
+    background: #ffd6e7;
+    border-left: 4px solid #ff4d88;
+}
+
+/* Nota de Efra (amarillo original o un tono distinto) */
+.nota-efra {
+    background: #60a4c4; /* el mismo que ya tienes */
+    border-left: 4px solid #0d35e4;
 }
 
 .nota:nth-child(2n) {
@@ -71,12 +83,20 @@ body::before {
     box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.35);
 }
 
-.nota small {
+.nota .autor {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+/* Fecha abajo a la derecha */
+.nota .fecha {
     position: absolute;
     bottom: 8px;
     right: 10px;
-    color: #555;
     font-size: 0.75rem;
+    color: #555;
 }
 
 /* ============================

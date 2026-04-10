@@ -4,13 +4,31 @@ from datetime import timedelta
 from .models import Carta, Nota, Foto
 import random
 
+
+PASSWORD_NOTA = "18012026"
 def inicio(request):
+    error = None
+
+    if request.method == "POST":
+        if request.POST.get("password") == PASSWORD_NOTA:
+            cuerpo = request.POST.get("cuerpo")
+
+            if cuerpo:
+                Nota.objects.create(
+                    cuerpo=cuerpo,
+                    autor="Abi ❤️"
+                )
+                return redirect("elementos:inicio")
+        else:
+            error = "Contraseña incorrecta"
+
     total_cartas = Carta.objects.count()
     notas = Nota.objects.all().order_by('-creada')
 
     return render(request, 'inicio.html', {
         'total_cartas': total_cartas,
-        'notas': notas
+        'notas': notas,
+        'error': error
     })
 
 
