@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from datetime import timedelta
 from .models import Carta, Nota, Foto
+from decouple import config
 import random
 
 
-PASSWORD_NOTA = "18012026"
+PASSWORD_NOTA = config('PASSWORD_NOTA')
 def inicio(request):
     error = None
 
@@ -46,7 +47,7 @@ def detalle_carta(request, id):
     })
 
 
-PASSWORD = "16112025"
+PASSWORD = config('PASSWORD')
 
 def subir_foto(request):
     error = None
