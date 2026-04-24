@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class Carta(models.Model):
-    titulo = models.CharField(max_length=30)
+    titulo = models.CharField(max_length=100)
     cuerpo = models.TextField()
     fecha = models.DateField()
     correo_enviado = models.BooleanField(default=False)
