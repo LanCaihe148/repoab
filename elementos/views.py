@@ -54,7 +54,7 @@ def subir_foto(request):
     error = None
 
     if request.method == "POST":
-        if request.POST.get("password") == PASSWORD:
+        if request.POST.get("password") == '15112025':
             imagen = request.FILES.get("imagen")
             descripcion = request.POST.get("descripcion")
 
