@@ -24,4 +24,9 @@ class Foto(models.Model):
     imagen = CloudinaryField('imagen')
     descripcion = models.TextField(blank=True, null=True)
     creada = models.DateTimeField(auto_now_add=True)
+    # Nuevo campo para identificar quién subió la foto
+    subida_por = models.CharField(max_length=20, choices=[
+        ('admin', 'Efra (Admin)'),
+        ('ella', 'Abi ❤️')
+    ], default='admin')
     

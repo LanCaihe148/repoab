@@ -5,87 +5,222 @@
     <title>Nuestros momentos ❤️</title>
     <style>
         body {
-            background: #111;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: white;
-            font-family: Arial;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
         h1 {
-            margin: 20px;
+            margin: 20px 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .collage {
             column-count: 4;
-            column-gap: 10px;
+            column-gap: 20px;
             padding: 10px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-            max-width: 1200px;   /* 🔥 limita el ancho */
-            margin: 0 auto;      /* 🔥 centra el bloque */
+        @media (max-width: 1200px) {
+            .collage { column-count: 3; }
+        }
+        
+        @media (max-width: 768px) {
+            .collage { column-count: 2; }
+        }
+        
+        @media (max-width: 480px) {
+            .collage { column-count: 1; }
         }
 
         .foto {
             break-inside: avoid;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        .foto img {
-            width: 100%;
+        .foto-contenedor {
+            position: relative;
             border-radius: 15px;
-            transition: transform 0.3s;
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
-        .foto img:hover {
-            transform: scale(1.05);
+        .foto-contenedor:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 🔵 Marco AZUL para fotos que subes TÚ (Admin) */
+        .foto-admin {
+            border: 4px solid #4A90E2;
+            border-radius: 15px;
+            background: #4A90E2;
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+        }
+
+        /* 🩷 Marco ROSA para fotos que sube ELLA */
+        .foto-ella {
+            border: 4px solid #FF69B4;
+            border-radius: 15px;
+            background: #FF69B4;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .foto-contenedor img {
+            width: 100%;
+            border-radius: 11px;
+            transition: transform 0.3s;
+            display: block;
+        }
+
+        .foto-contenedor img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Etiqueta flotante */
+        .etiqueta {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: bold;
+            backdrop-filter: blur(8px);
+            z-index: 10;
+            font-family: monospace;
+        }
+
+        .etiqueta-admin {
+            background: rgba(74, 144, 226, 0.9);
+            color: white;
+        }
+
+        .etiqueta-ella {
+            background: rgba(255, 105, 180, 0.9);
+            color: white;
         }
 
         .desc {
-            font-size: 12px;
-            margin-top: 5px;
-            color: #ccc;
+            font-size: 13px;
+            margin-top: 10px;
+            color: #e0e0e0;
+            padding: 0 8px;
+            font-style: italic;
         }
 
         .contenedor-subir {
             display: flex;
             justify-content: center;
-            margin: 20px 0;
+            margin: 30px 0;
         }
 
         .btn-subir {
-            padding: 10px 20px;
-            font-size: 14px;
+            padding: 12px 28px;
+            font-size: 16px;
             border: none;
-            border-radius: 15px;
-            background: #4CAF50;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .btn-subir:hover {
-            background: #3e8e41;
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
+        
+        .stats {
+            margin: 20px auto;
+            display: inline-flex;
+            gap: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat {
+            font-size: 14px;
+        }
+        
+        .stat span {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .azul-text { color: #4A90E2; }
+        .rosa-text { color: #FF69B4; }
     </style>
 </head>
 <body>
 
 <h1>❤️ Nuestros momentos ❤️</h1>
 
+<div class="stats">
+    <div class="stat">
+        💙 <span class="azul-text">{{ fotos|selectattr:"subida_por","equalto","admin"|length }}</span> recuerdos de Efra
+    </div>
+    <div class="stat">
+        💗 <span class="rosa-text">{{ fotos|selectattr:"subida_por","equalto","ella"|length }}</span> recuerdos de Abi
+    </div>
+</div>
 
 <div class="contenedor-subir">
     <a href="{% url 'elementos:subir_foto' %}">
-        <button class="btn-subir">Subir foto 📸</button>
+        <button class="btn-subir">📸 Subir un recuerdo</button>
     </a>
 </div>
+
 <div class="collage">
     {% for foto in fotos %}
         <div class="foto">
-            <img src="{{ foto.imagen.url }}">
-            <div class="desc">{{ foto.descripcion }}</div>
+            <div class="foto-contenedor {% if foto.subida_por == 'admin' %}foto-admin{% else %}foto-ella{% endif %}">
+                <img src="{{ foto.imagen.url }}" alt="{{ foto.descripcion|default:'Momento especial' }}">
+                <div class="etiqueta {% if foto.subida_por == 'admin' %}etiqueta-admin{% else %}etiqueta-ella{% endif %}">
+                    {% if foto.subida_por == 'admin' %}
+                        💙 Efra
+                    {% else %}
+                        💗 Abi
+                    {% endif %}
+                </div>
+            </div>
+            {% if foto.descripcion %}
+                <div class="desc">{{ foto.descripcion }}</div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div style="text-align: center; padding: 50px;">
+            <p>✨ No hay fotos aún ✨</p>
+            <p>¡Sube tu primer recuerdo!</p>
         </div>
     {% endfor %}
 </div>
+
+<script>
+    // Animación suave al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        const fotos = document.querySelectorAll('.foto-contenedor');
+        fotos.forEach((foto, index) => {
+            foto.style.opacity = '0';
+            foto.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                foto.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                foto.style.opacity = '1';
+                foto.style.transform = 'translateY(0)';
+            }, index * 50);
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -4,6 +4,7 @@ from datetime import timedelta
 from .models import Carta, Nota, Foto
 from decouple import config
 import random
+import os
 
 
 PASSWORD_NOTA = config('PASSWORD_NOTA')
@@ -58,7 +59,12 @@ def subir_foto(request):
             descripcion = request.POST.get("descripcion")
 
             if imagen:
-                Foto.objects.create(imagen=imagen, descripcion=descripcion)
+                # Cuando ella sube desde la web, se marca como "ella"
+                Foto.objects.create(
+                    imagen=imagen, 
+                    descripcion=descripcion,
+                    subida_por='ella'  # 👈 ESTA LÍNEA ES CLAVE
+                )
                 return redirect("elementos:collage")
         else:
             error = "Contraseña incorrecta"
@@ -69,4 +75,4 @@ def collage(request):
     fotos = list(Foto.objects.all())
     random.shuffle(fotos)
 
-    return render(request, "collage.html", {"fotos": fotos})
+    return render(request, "collage.html", {"fotos": fotos})    
