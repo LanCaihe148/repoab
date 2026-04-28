@@ -168,10 +168,10 @@
 
 <div class="stats">
     <div class="stat">
-        💙 <span class="azul-text">{{ fotos|selectattr:"subida_por","equalto","admin"|length }}</span> recuerdos de Efra
+        💙 <span class="azul-text" id="fotos-admin">0</span> recuerdos de Efra
     </div>
     <div class="stat">
-        💗 <span class="rosa-text">{{ fotos|selectattr:"subida_por","equalto","ella"|length }}</span> recuerdos de Abi
+        💗 <span class="rosa-text" id="fotos-ella">0</span> recuerdos de Abi
     </div>
 </div>
 
@@ -217,6 +217,40 @@
                 foto.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                 foto.style.opacity = '1';
                 foto.style.transform = 'translateY(0)';
+            }, index * 50);
+        });
+    });
+</script>
+<script>
+    // Calcular estadísticas desde JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // Contar fotos por tipo
+        const fotos = document.querySelectorAll('.foto');
+        let adminCount = 0;
+        let ellaCount = 0;
+        
+        fotos.forEach(foto => {
+            const contenedor = foto.querySelector('.foto-contenedor');
+            if (contenedor.classList.contains('foto-admin')) {
+                adminCount++;
+            } else if (contenedor.classList.contains('foto-ella')) {
+                ellaCount++;
+            }
+        });
+        
+        // Actualizar estadísticas
+        document.getElementById('fotos-admin').textContent = adminCount;
+        document.getElementById('fotos-ella').textContent = ellaCount;
+        
+        // Animación suave al cargar
+        const elementos = document.querySelectorAll('.foto-contenedor');
+        elementos.forEach((elemento, index) => {
+            elemento.style.opacity = '0';
+            elemento.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                elemento.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                elemento.style.opacity = '1';
+                elemento.style.transform = 'translateY(0)';
             }, index * 50);
         });
     });
