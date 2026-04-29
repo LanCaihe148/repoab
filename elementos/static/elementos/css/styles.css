@@ -242,7 +242,6 @@ h2::after {
 }
 
 .carta-real::before {
-    content: '💌';
     position: absolute;
     top: -15px;
     left: 30px;
