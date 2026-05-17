@@ -48,22 +48,22 @@ def detalle_carta(request, id):
     })
 
 
-PASSWORD = '16112025'
+PASSWORD = config('PASSWORD')
 
 def subir_foto(request):
     error = None
 
     if request.method == "POST":
-        if request.POST.get("password") == '15112025':
+        if request.POST.get("password") == PASSWORD:
             imagen = request.FILES.get("imagen")
             descripcion = request.POST.get("descripcion")
 
             if imagen:
-                # Cuando ella sube desde la web, se marca como "ella"
+                
                 Foto.objects.create(
                     imagen=imagen, 
                     descripcion=descripcion,
-                    subida_por='ella'  # 👈 ESTA LÍNEA ES CLAVE
+                    subida_por='ella'
                 )
                 return redirect("elementos:collage")
         else:
