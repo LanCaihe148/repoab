@@ -5,9 +5,11 @@ from .models import Carta, Nota, Foto
 from decouple import config
 import random
 import os
+import hmac
 
-
+PASSWORD_COLLAGE = config('PASSWORD_COLLAGE', default=PASSWORD)
 PASSWORD_NOTA = config('PASSWORD_NOTA')
+
 def inicio(request):
     error = None
 
@@ -65,6 +67,7 @@ def subir_foto(request):
                     descripcion=descripcion,
                     subida_por='ella'
                 )
+                request.session["collage_ok"] = True
                 return redirect("elementos:collage")
         else:
             error = "Contraseña incorrecta"
@@ -72,7 +75,17 @@ def subir_foto(request):
     return render(request, "subir_foto.html", {"error": error})
 
 def collage(request):
+    # Si todavía no puso la contraseña, mostramos el formulario
+    if not request.session.get("collage_ok"):
+        error = None
+        if request.method == "POST":
+            intento = request.POST.get("password", "").encode()
+            if hmac.compare_digest(intento, PASSWORD_COLLAGE.encode()):
+                request.session["collage_ok"] = True
+                return redirect("elementos:collage")
+            error = "Contraseña incorrecta"
+        return render(request, "collage_login.html", {"error": error})
+
     fotos = list(Foto.objects.all())
     random.shuffle(fotos)
-
-    return render(request, "collage.html", {"fotos": fotos})    
+    return render(request, "collage.html", {"fotos": fotos})  
