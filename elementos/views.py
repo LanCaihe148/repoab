@@ -7,6 +7,7 @@ import random
 import os
 import hmac
 
+PASSWORD = config('PASSWORD')
 PASSWORD_COLLAGE = config('PASSWORD_COLLAGE', default=PASSWORD)
 PASSWORD_NOTA = config('PASSWORD_NOTA')
 
@@ -49,8 +50,6 @@ def detalle_carta(request, id):
         'carta': carta
     })
 
-
-PASSWORD = config('PASSWORD')
 
 def subir_foto(request):
     error = None
