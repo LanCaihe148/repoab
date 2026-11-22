@@ -2,23 +2,47 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'elementos/css/styles.css' %}">
 
 <a href="{% url 'elementos:lista_cartas' %}"
    class="btn btn-sm btn-outline-secondary mb-4">
     ← Volver
 </a>
 
-<div class="carta-real">
-    <h2>💌 {{ carta.titulo }}</h2>
+<div class="carta-escena" id="cartaEscena">
 
-    <div class="fecha">
-        {{ carta.fecha }}
-    </div>
+    <button type="button" class="sobre" id="sobre" aria-label="Abrir la carta">
+        <span class="sobre-tapa"></span>
+        <span class="sobre-sello">❤️</span>
+        <span class="sobre-pista">Toca para abrir</span>
+    </button>
 
-    <p style="white-space: pre-line;">
-    {{ carta.cuerpo }}
-</p>
+    <article class="carta-papel">
+        <h2 class="carta-titulo">{{ carta.titulo }}</h2>
+        <div class="carta-fecha">{{ carta.fecha|date:"d/m/Y" }}</div>
+        <div class="carta-texto">{{ carta.cuerpo|linebreaks }}</div>
+        <p class="carta-firma">Con cariño, Efra ❤️</p>
+    </article>
+
 </div>
+
+<script>
+(function () {
+    var escena = document.getElementById('cartaEscena');
+    var sobre = document.getElementById('sobre');
+    if (!escena || !sobre) return;
+
+    // Si hay JavaScript, la carta empieza dentro del sobre cerrado
+    escena.classList.add('cerrada');
+
+    sobre.addEventListener('click', function () {
+        if (!escena.classList.contains('cerrada')) return;
+        escena.classList.add('abriendo');
+        setTimeout(function () {
+            escena.classList.remove('cerrada', 'abriendo');
+            escena.classList.add('abierta');
+        }, 750);
+    });
+})();
+</script>
 
 {% endblock %}

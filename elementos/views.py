@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, date
 from .models import Carta, Nota, Foto
 from decouple import config
 import random
@@ -10,6 +10,20 @@ import hmac
 PASSWORD = config('PASSWORD')
 PASSWORD_COLLAGE = config('PASSWORD_COLLAGE', default=PASSWORD)
 PASSWORD_NOTA = config('PASSWORD_NOTA')
+
+FECHA_INICIO = config('FECHA_INICIO', default='')
+
+
+def calcular_dias_juntos():
+    if not FECHA_INICIO:
+        return None
+    try:
+        inicio = date.fromisoformat(FECHA_INICIO)
+    except ValueError:
+        return None
+    dias = (timezone.localdate() - inicio).days
+    return dias if dias >= 0 else None
+
 
 def inicio(request):
     error = None
@@ -33,7 +47,8 @@ def inicio(request):
     return render(request, 'inicio.html', {
         'total_cartas': total_cartas,
         'notas': notas,
-        'error': error
+        'error': error,
+        'dias_juntos': calcular_dias_juntos(),
     })
 
 

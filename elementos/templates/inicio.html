@@ -2,6 +2,16 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'elementos/css/styles.css' %}">
+
+{% if dias_juntos is not None %}
+<div class="contador-wrap">
+    <div class="contador-dias">
+        <div class="contador-numero">{{ dias_juntos }}</div>
+        <div class="contador-texto">{{ dias_juntos|pluralize:"día,días" }} juntos ❤️</div>
+    </div>
+</div>
+{% endif %}
+
 <div class="text-center mb-4">
     <h2>📬 Cartas</h2>
     <h4 class="text-muted">{{ total_cartas }} cartas guardadas</h4>

@@ -29,4 +29,14 @@ class Foto(models.Model):
         ('admin', 'Efra (Admin)'),
         ('ella', 'Abi ❤️')
     ], default='admin')
+
+    @property
+    def url_ligera(self):
+        """Versión liviana de la foto (máx. 700 px de ancho) para el collage."""
+        if not self.imagen:
+            return ""
+        return self.imagen.build_url(
+            width=700, crop="limit", quality="auto", fetch_format="auto",
+            secure=True,
+        )
     

@@ -1,8 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nuestros momentos ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -22,72 +25,81 @@
 
         .collage {
             column-count: 4;
-            column-gap: 20px;
-            padding: 10px;
+            column-gap: 24px;
+            padding: 20px 10px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        @media (max-width: 1200px) {
-            .collage { column-count: 3; }
-        }
-        
-        @media (max-width: 768px) {
-            .collage { column-count: 2; }
-        }
-        
-        @media (max-width: 480px) {
-            .collage { column-count: 1; }
-        }
+        @media (max-width: 1200px) { .collage { column-count: 3; } }
+        @media (max-width: 768px)  { .collage { column-count: 2; } }
+        @media (max-width: 480px)  { .collage { column-count: 1; } }
 
+        /* ---------- Polaroid ---------- */
         .foto {
             break-inside: avoid;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Cada foto ligeramente inclinada, distinta */
+        .foto:nth-child(3n+1) { transform: rotate(-2deg); }
+        .foto:nth-child(3n+2) { transform: rotate(1.5deg); }
+        .foto:nth-child(3n)   { transform: rotate(-0.8deg); }
+
+        .foto:hover {
+            transform: rotate(0deg) scale(1.04);
+            position: relative;
+            z-index: 5;
         }
 
         .foto-contenedor {
             position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            background: #fdfdfb;
+            padding: 12px 12px 14px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
         }
 
-        .foto-contenedor:hover {
-            transform: translateY(-5px);
+        /* Cinta adhesiva: azul = Efra, rosa = Abi */
+        .foto-contenedor::before {
+            content: "";
+            position: absolute;
+            top: -11px;
+            left: 50%;
+            width: 80px;
+            height: 24px;
+            transform: translateX(-50%) rotate(-3deg);
+            z-index: 2;
         }
-
-        /* 🔵 Marco AZUL para fotos que subes TÚ (Admin) */
-        .foto-admin {
-            border: 4px solid #4A90E2;
-            border-radius: 15px;
-            background: #4A90E2;
-            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
-        }
-
-        /* 🩷 Marco ROSA para fotos que sube ELLA */
-        .foto-ella {
-            border: 4px solid #FF69B4;
-            border-radius: 15px;
-            background: #FF69B4;
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
-        }
+        .foto-admin::before { background: rgba(74, 144, 226, 0.65); }
+        .foto-ella::before  { background: rgba(255, 105, 180, 0.65); }
 
         .foto-contenedor img {
-            width: 100%;
-            border-radius: 11px;
-            transition: transform 0.3s;
             display: block;
+            width: 100%;
+            height: auto;
+            background: #e9e9e4;
         }
 
-        .foto-contenedor img:hover {
-            transform: scale(1.02);
+        /* Reserva espacio mientras la foto carga (para que loading="lazy" funcione bien) */
+        .foto-contenedor img:not(.cargada) { min-height: 220px; }
+
+        .polaroid-pie {
+            min-height: 34px;
+            padding: 12px 6px 2px;
+            font-family: 'Caveat', 'Segoe Script', cursive;
+            font-size: 22px;
+            line-height: 1.2;
+            color: #3b3b3b;
+            word-break: break-word;
         }
 
-        /* Etiqueta flotante */
+        /* Etiqueta sobre la foto */
         .etiqueta {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 20px;
+            right: 20px;
             padding: 6px 12px;
             border-radius: 25px;
             font-size: 12px;
@@ -95,26 +107,12 @@
             backdrop-filter: blur(8px);
             z-index: 10;
             font-family: monospace;
-        }
-
-        .etiqueta-admin {
-            background: rgba(74, 144, 226, 0.9);
             color: white;
         }
+        .etiqueta-admin { background: rgba(74, 144, 226, 0.9); }
+        .etiqueta-ella  { background: rgba(255, 105, 180, 0.9); }
 
-        .etiqueta-ella {
-            background: rgba(255, 105, 180, 0.9);
-            color: white;
-        }
-
-        .desc {
-            font-size: 13px;
-            margin-top: 10px;
-            color: #e0e0e0;
-            padding: 0 8px;
-            font-style: italic;
-        }
-
+        /* ---------- Resto de la página ---------- */
         .contenedor-subir {
             display: flex;
             justify-content: center;
@@ -138,7 +136,7 @@
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
-        
+
         .stats {
             margin: 20px auto;
             display: inline-flex;
@@ -148,16 +146,10 @@
             border-radius: 50px;
             backdrop-filter: blur(10px);
         }
-        
-        .stat {
-            font-size: 14px;
-        }
-        
-        .stat span {
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
+
+        .stat { font-size: 14px; }
+        .stat span { font-weight: bold; font-size: 18px; }
+
         .azul-text { color: #4A90E2; }
         .rosa-text { color: #FF69B4; }
     </style>
@@ -185,18 +177,16 @@
     {% for foto in fotos %}
         <div class="foto">
             <div class="foto-contenedor {% if foto.subida_por == 'admin' %}foto-admin{% else %}foto-ella{% endif %}">
-                <img src="{{ foto.imagen.url }}" alt="{{ foto.descripcion|default:'Momento especial' }}">
+                <img src="{{ foto.url_ligera }}"
+                     loading="lazy"
+                     decoding="async"
+                     onload="this.classList.add('cargada')"
+                     alt="{{ foto.descripcion|default:'Momento especial' }}">
                 <div class="etiqueta {% if foto.subida_por == 'admin' %}etiqueta-admin{% else %}etiqueta-ella{% endif %}">
-                    {% if foto.subida_por == 'admin' %}
-                        💙 Efra
-                    {% else %}
-                        💗 Abi
-                    {% endif %}
+                    {% if foto.subida_por == 'admin' %}💙 Efra{% else %}💗 Abi{% endif %}
                 </div>
+                <div class="polaroid-pie">{% if foto.descripcion %}{{ foto.descripcion }}{% endif %}</div>
             </div>
-            {% if foto.descripcion %}
-                <div class="desc">{{ foto.descripcion }}</div>
-            {% endif %}
         </div>
     {% empty %}
         <div style="text-align: center; padding: 50px;">
@@ -207,52 +197,27 @@
 </div>
 
 <script>
-    // Animación suave al cargar
-    document.addEventListener('DOMContentLoaded', function() {
-        const fotos = document.querySelectorAll('.foto-contenedor');
-        fotos.forEach((foto, index) => {
-            foto.style.opacity = '0';
-            foto.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                foto.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                foto.style.opacity = '1';
-                foto.style.transform = 'translateY(0)';
-            }, index * 50);
+    document.addEventListener('DOMContentLoaded', function () {
+        var admin = 0;
+        var ella = 0;
+
+        document.querySelectorAll('.foto-contenedor').forEach(function (contenedor, i) {
+            // Contar fotos de cada quien
+            if (contenedor.classList.contains('foto-admin')) admin++;
+            else if (contenedor.classList.contains('foto-ella')) ella++;
+
+            // Aparición suave (máximo 1 segundo de espera, aunque haya cientos de fotos)
+            contenedor.style.opacity = '0';
+            contenedor.style.transform = 'translateY(20px)';
+            setTimeout(function () {
+                contenedor.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                contenedor.style.opacity = '1';
+                contenedor.style.transform = 'translateY(0)';
+            }, Math.min(i, 20) * 50);
         });
-    });
-</script>
-<script>
-    // Calcular estadísticas desde JavaScript
-    document.addEventListener('DOMContentLoaded', function() {
-        // Contar fotos por tipo
-        const fotos = document.querySelectorAll('.foto');
-        let adminCount = 0;
-        let ellaCount = 0;
-        
-        fotos.forEach(foto => {
-            const contenedor = foto.querySelector('.foto-contenedor');
-            if (contenedor.classList.contains('foto-admin')) {
-                adminCount++;
-            } else if (contenedor.classList.contains('foto-ella')) {
-                ellaCount++;
-            }
-        });
-        
-        // Actualizar estadísticas
-        document.getElementById('fotos-admin').textContent = adminCount;
-        document.getElementById('fotos-ella').textContent = ellaCount;
-        
-        // Animación suave al cargar
-        const elementos = document.querySelectorAll('.foto-contenedor');
-        elementos.forEach((elemento, index) => {
-            elemento.style.opacity = '0';
-            elemento.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                elemento.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                elemento.style.opacity = '1';
-                elemento.style.transform = 'translateY(0)';
-            }, index * 50);
-        });
+
+        document.getElementById('fotos-admin').textContent = admin;
+        document.getElementById('fotos-ella').textContent = ella;
     });
 </script>
 
