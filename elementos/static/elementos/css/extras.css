@@ -1,0 +1,183 @@
+/* ============================================
+   EXTRAS: contador de días y carta con sobre
+   ============================================ */
+
+/* ---------- Contador de días juntos ---------- */
+.contador-wrap {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.contador-dias {
+    display: inline-block;
+    padding: 18px 40px;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.contador-numero {
+    font-family: 'Caveat', 'Segoe Script', cursive;
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #e8556e;
+}
+
+.contador-texto {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    color: #4a3b3f;
+}
+
+/* ---------- Carta con sobre ---------- */
+.carta-escena {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+/* Sin JavaScript no hay sobre: se ve la carta directamente */
+.carta-escena .sobre { display: none; }
+.carta-escena.cerrada .sobre { display: block; }
+.carta-escena.cerrada .carta-papel { display: none; }
+
+.sobre {
+    position: relative;
+    width: min(420px, 100%);
+    height: 270px;
+    margin: 30px auto;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+    background: #e6c991;
+    border-radius: 6px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+    transition: transform 0.3s ease;
+}
+
+.sobre:hover { transform: translateY(-4px); }
+
+/* Parte de adelante del sobre (los lados y la base) */
+.sobre::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    background: #f3e0b8;
+    clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Solapa de arriba */
+.sobre-tapa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    background: #ecd5a6;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 0.7s ease;
+    z-index: 2;
+}
+
+.carta-escena.abriendo .sobre-tapa {
+    transform: perspective(900px) rotateX(180deg);
+}
+
+/* Sello de corazón */
+.sobre-sello {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    background: #d9455f;
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    transition: opacity 0.3s ease;
+}
+
+.carta-escena.abriendo .sobre-sello,
+.carta-escena.abriendo .sobre-pista { opacity: 0; }
+
+.sobre-pista {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Caveat', 'Segoe Script', cursive;
+    font-size: 1.5rem;
+    color: #8a6d3b;
+    z-index: 3;
+    transition: opacity 0.3s ease;
+}
+
+/* La carta (papel) */
+.carta-papel {
+    position: relative;
+    padding: 44px 40px 34px;
+    background: linear-gradient(#fffdf7, #fff6e3);
+    border: 1px solid #efe2c6;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 18px 40px rgba(120, 80, 40, 0.18);
+    font-family: 'Caveat', 'Segoe Script', cursive;
+    color: #3d3128;
+    margin-top: 18px;
+    transform: rotate(-0.4deg);
+}
+
+.carta-escena.abierta .carta-papel {
+    animation: subir-carta 0.7s ease both;
+}
+
+@keyframes subir-carta {
+    from { opacity: 0; transform: translateY(30px) rotate(-1.5deg); }
+    to   { opacity: 1; transform: translateY(0) rotate(-0.4deg); }
+}
+
+.carta-titulo {
+    margin-bottom: 4px;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #8b2f45;
+}
+
+.carta-fecha {
+    margin-bottom: 22px;
+    text-align: right;
+    font-size: 1.3rem;
+    color: #9c8a73;
+}
+
+.carta-texto p {
+    margin-bottom: 14px;
+    font-size: 1.65rem;
+    line-height: 1.45;
+}
+
+.carta-firma {
+    margin-top: 26px;
+    text-align: right;
+    font-size: 1.8rem;
+    color: #8b2f45;
+}
+
+@media (max-width: 576px) {
+    .carta-papel { padding: 30px 22px 26px; }
+    .carta-texto p { font-size: 1.45rem; }
+    .sobre { height: 230px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sobre-tapa { transition: none; }
+    .carta-escena.abierta .carta-papel { animation: none; }
+}
